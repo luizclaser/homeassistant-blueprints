@@ -2,7 +2,7 @@ blueprint:
   name: "Desligar Lâmpadas por Ausência de Presença Humana"
   description: "Desliga uma ou mais lâmpadas quando os sensores de presença selecionados permanecerem sem detectar movimento/presença humana por um tempo determinado dentro da janela de horário configurada."
   domain: automation
-  source_url: https://github.com/luizclaser/homeassistant-blueprints/blob/main/desligar_por_ausencia.yaml
+  source_url: https://raw.githubusercontent.com/luizclaser/homeassistant-blueprints/main/desligar_por_ausencia.yaml
   input:
     sensores_presenca:
       name: Sensores de Presença / Movimento
