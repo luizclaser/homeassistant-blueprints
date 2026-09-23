@@ -1,0 +1,68 @@
+blueprint:
+  name: "Desligar Lâmpadas por Ausência de Presença Humana"
+  description: "Desliga uma ou mais lâmpadas quando os sensores de presença selecionados permanecerem sem detectar movimento/presença humana por um tempo determinado dentro da janela de horário configurada."
+  domain: automation
+  source_url: https://github.com/luizclaser/homeassistant-blueprints/blob/main/desligar_por_ausencia.yaml
+  input:
+    sensores_presenca:
+      name: Sensores de Presença / Movimento
+      description: Selecione um ou mais sensores de presença humana ou movimento que serão monitorados.
+      selector:
+        target:
+          entity:
+            domain: binary_sensor
+            device_class:
+              - occupancy
+              - motion
+
+    lampadas_alvo:
+      name: Lâmpadas / Interruptores para Desligar
+      description: Selecione as lâmpadas ou interruptores que devem ser desligados por ausência.
+      selector:
+        target:
+          entity:
+            domain:
+              - light
+              - switch
+
+    tempo_ausencia:
+      name: Tempo de Ausência (Minutos)
+      description: Tempo contínuo sem detecção de presença necessário para acionar o desligamento.
+      default: 5
+      selector:
+        number:
+          min: 1
+          max: 120
+          unit_of_measurement: "minutos"
+
+    horario_inicio:
+      name: Horário de Início
+      description: Horário a partir do qual a automação passa a monitorar a ausência.
+      default: "22:00:00"
+      selector:
+        time: {}
+
+    horario_fim:
+      name: Horário de Término
+      description: Horário limite para a automação monitorar a ausência.
+      default: "06:00:00"
+      selector:
+        time: {}
+
+mode: restart
+
+trigger:
+  - platform: state
+    entity_id: !input sensores_presenca
+    to: "off"
+    for:
+      minutes: !input tempo_ausencia
+
+condition:
+  - condition: time
+    after: !input horario_inicio
+    before: !input horario_fim
+
+action:
+  - action: homeassistant.turn_off
+    target: !input lampadas_alvo
