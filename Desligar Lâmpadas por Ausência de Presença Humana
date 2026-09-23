@@ -8,12 +8,12 @@ blueprint:
       name: Sensores de Presença / Movimento
       description: Selecione um ou mais sensores de presença humana ou movimento que serão monitorados.
       selector:
-        target:
-          entity:
-            domain: binary_sensor
-            device_class:
-              - occupancy
-              - motion
+        entity:
+          domain: binary_sensor
+          device_class:
+            - occupancy
+            - motion
+          multiple: true
 
     lampadas_alvo:
       name: Lâmpadas / Interruptores para Desligar
