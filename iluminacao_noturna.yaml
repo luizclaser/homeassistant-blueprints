@@ -1,5 +1,5 @@
 blueprint:
-  name: "Iluminação Noturna - Múltiplos Sensores, Lâmpadas e Horário Flexível"
+  name: "Iluminação Noturna - Sensor de passagem"
   description: "Liga uma ou mais luzes/interruptores quando qualquer um dos sensores de porta ou movimento selecionados for acionado dentro do intervalo de horário permitido, e desliga após o tempo configurado em minutos."
   domain: automation
   source_url: https://github.com/luizclaser/homeassistant-blueprints/blob/main/iluminacao_noturna.yaml
@@ -21,24 +21,24 @@ blueprint:
     sensores_movimento:
       name: Sensores de Movimento / Presença (Opcional)
       description: Selecione um ou mais sensores de movimento ou presença.
-      default: []
+      default: {}
       selector:
-        entity:
-          domain: binary_sensor
-          device_class:
-            - motion
-            - occupancy
-          multiple: true
+        target:
+          entity:
+            domain: binary_sensor
+            device_class:
+              - motion
+              - occupancy
 
     sensores_porta:
       name: Sensores de Porta / Abertura (Opcional)
       description: Selecione um ou mais sensores de porta ou janela.
-      default: []
+      default: {}
       selector:
-        entity:
-          domain: binary_sensor
-          device_class: door
-          multiple: true
+        target:
+          entity:
+            domain: binary_sensor
+            device_class: door
 
     dispositivos_alvo:
       name: Interruptores / Lâmpadas
